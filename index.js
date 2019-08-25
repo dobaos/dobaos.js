@@ -6,7 +6,8 @@ const Dobaos = params => {
     redis: null,
     req_channel: "dobaos_req",
     bcast_channel: "dobaos_cast",
-    res_prefix: "dobaos_res"
+    res_prefix: "dobaos_res",
+    req_timeout: 500
   };
   Object.assign(_params, params);
 
@@ -49,6 +50,7 @@ const Dobaos = params => {
           } else {
             cb(new Error(res.payload));
           }
+          clearTimeout(self.requests[reqIndex].req_timeout);
           self.requests.splice(reqIndex, 1);
         } catch (e) {
           return cb(e);
@@ -61,6 +63,7 @@ const Dobaos = params => {
   self._commonReq = (method, payload) => {
     return new Promise((resolve, reject) => {
       const response_channel = `${_params.res_prefix}_${Math.random() * 255}`;
+      // request to send
       const request = {};
       request.method = method;
       request.payload = payload;
@@ -71,8 +74,26 @@ const Dobaos = params => {
         }
         resolve(payload);
       };
+
+      // object to store until response
+      let req = {};
+      req.response_channel = response_channel;
+      req.cb = cb;
+      // timeout
+      req.timeout = setTimeout(_ => {
+        // find in array and destroy
+        const reqIndex = self.requests.findIndex(t => t.response_channel === response_channel);
+        if (reqIndex > -1) {
+          const req = self.requests[reqIndex];
+          const cb = req.cb;
+          self.requests.splice(reqIndex, 1);
+
+          return cb(new Error("ERR_TIMEOUT"));
+        }
+      }, _params.req_timeout);
+
       // store request
-      self.requests.push({ response_channel: response_channel, cb: cb });
+      self.requests.push(req);
       // publish and await response
       self.pub.publish(_params.req_channel, JSON.stringify(request));
     });
