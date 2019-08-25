@@ -9,7 +9,7 @@ const Dobaos = params => {
     req_channel: "dobaos_req",
     bcast_channel: "dobaos_cast",
     res_prefix: "dobaos_res",
-    req_timeout: 500
+    req_timeout: 5000
   };
   Object.assign(_params, params);
 
