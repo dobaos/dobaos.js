@@ -2,7 +2,16 @@ const Dobaos = require("./index.js");
 
 const dob = Dobaos();
 
-dob.on("datapoint value", console.log);
+const processDobaosValue = payload => {
+  if (Array.isArray(payload)) {
+    return payload.forEach(processDobaosValue);
+  }
+
+  let { id, raw, value } = payload;
+  console.log("broadcasted: ", id, raw, value);
+};
+
+dob.on("datapoint value", processDobaosValue);
 
 dob.on("ready", async _ => {
   console.log("dob is ready");
