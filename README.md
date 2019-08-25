@@ -7,6 +7,16 @@ NodeJS library providing dobaos client functionality.
 ```text
 const Dobaos = require("./index.js");
 
+/*** 
+Default params may be overwritten
+    dob = Dobaos({
+      redis: null, // provide redis url as a string
+      req_channel: "dobaos_req",
+      bcast_channel: "dobaos_cast",
+      res_prefix: "dobaos_res",
+      req_timeout: 500
+    });
+***/
 const dob = Dobaos();
 
 const processDobaosValue = payload => {

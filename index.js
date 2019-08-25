@@ -1,3 +1,5 @@
+// client library for dobaos application
+// (c) Vladimir Shabunin, 2019
 const EE = require("events");
 const redis = require("redis");
 

@@ -1,5 +1,15 @@
 const Dobaos = require("./index.js");
 
+/*** 
+Default params may be overwritten
+    dob = Dobaos({
+      redis: null,
+      req_channel: "dobaos_req",
+      bcast_channel: "dobaos_cast",
+      res_prefix: "dobaos_res",
+      req_timeout: 500
+    });
+***/
 const dob = Dobaos();
 
 const processDobaosValue = payload => {
