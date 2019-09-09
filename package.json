@@ -1,13 +1,17 @@
 {
   "name": "dobaos.js",
-  "version": "0.0.7",
+  "version": "0.4.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dobaos/dobaos.js.git"
+  },
+  "keywords": ["knx", "baos", "dobaos"],
+  "author": "Vladimir Shabunin",
   "license": "ISC",
   "dependencies": {
     "redis": "^2.8.0"

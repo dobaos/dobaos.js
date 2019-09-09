@@ -32,7 +32,12 @@ const processDobaosValue = payload => {
 dob.on("datapoint value", processDobaosValue);
 
 dob.on("ready", async _ => {
-  console.log("dob is ready");
+  console.log("dobaos client is ready");
+
+  // service reqs
+  console.log(await dob.reset());
+  console.log(await dob.getVersion());
+  // baos reqs
   console.log(await dob.getDescription([1, 2, 3]));
   console.log(await dob.getValue([1, 2, 3]));
   console.log(await dob.setValue([{ id: 10, value: 1 }, { id: 11, value: 0 }]));
@@ -43,8 +48,6 @@ dob.on("ready", async _ => {
   console.log(await dob.setProgrammingMode(1));
   console.log(await dob.getProgrammingMode());
   console.log(await dob.setProgrammingMode(0));
-  console.log(await dob.getVersion());
-  console.log(await dob.reset());
 });
 
 dob.init();
