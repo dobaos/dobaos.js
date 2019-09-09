@@ -8,6 +8,7 @@ const Dobaos = params => {
     redis: null,
     req_channel: "dobaos_req",
     bcast_channel: "dobaos_cast",
+    service_channel: "dobaos_service",
     res_prefix: "dobaos_res",
     req_timeout: 5000
   };
@@ -62,7 +63,7 @@ const Dobaos = params => {
     self.sub.psubscribe(`${_params.res_prefix}_*`);
   };
 
-  self._commonReq = (method, payload) => {
+  self._commonReq = (channel, method, payload) => {
     return new Promise((resolve, reject) => {
       const response_channel = `${_params.res_prefix}_${Math.random() * 255}`;
       // request to send
@@ -97,27 +98,34 @@ const Dobaos = params => {
       // store request
       self.requests.push(req);
       // publish and await response
-      self.pub.publish(_params.req_channel, JSON.stringify(request));
+      self.pub.publish(channel, JSON.stringify(request));
     });
   };
-  // public funcs
+  // sdk reqs
   self.getDescription = payload => {
-    return self._commonReq("get description", payload);
+    return self._commonReq(_params.req_channel, "get description", payload);
   };
   self.getValue = payload => {
-    return self._commonReq("get value", payload);
+    return self._commonReq(_params.req_channel, "get value", payload);
   };
   self.readValue = payload => {
-    return self._commonReq("read value", payload);
+    return self._commonReq(_params.req_channel, "read value", payload);
   };
   self.setValue = payload => {
-    return self._commonReq("set value", payload);
+    return self._commonReq(_params.req_channel, "set value", payload);
   };
   self.getProgrammingMode = _ => {
-    return self._commonReq("get programming mode", null);
+    return self._commonReq(_params.req_channel, "get programming mode", null);
   };
   self.setProgrammingMode = payload => {
-    return self._commonReq("set programming mode", payload);
+    return self._commonReq(_params.req_channel, "set programming mode", payload);
+  };
+  // service reqs
+  self.getVersion = _ => {
+    return self._commonReq(_params.service_channel, "version", null);
+  };
+  self.reset = _ => {
+    return self._commonReq(_params.service_channel, "reset", null);
   };
 
   return self;

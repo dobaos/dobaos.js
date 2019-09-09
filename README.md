@@ -13,6 +13,7 @@ Default params may be overwritten
       redis: null, // provide redis url as a string
       req_channel: "dobaos_req",
       bcast_channel: "dobaos_cast",
+      service_channel: "dobaos_service",
       res_prefix: "dobaos_res",
       req_timeout: 500
     });
@@ -40,7 +41,10 @@ dob.on("ready", async _ => {
   console.log(await dob.readValue(1));
   console.log(await dob.getProgrammingMode());
   console.log(await dob.setProgrammingMode(1));
+  console.log(await dob.getProgrammingMode());
   console.log(await dob.setProgrammingMode(0));
+  console.log(await dob.getVersion());
+  console.log(await dob.reset());
 });
 
 dob.init();
@@ -55,8 +59,7 @@ dob.init();
 * setValue({id: number, value: <depends on dpt> }/[{id:..}, {id: ..}...]);
 * getProgrammingMode();
 * setProgrammingMode(0/1/false/true);
+* getVersion(null);
+* reset(null);
 ```
 
-## TODO
-
-* service methods

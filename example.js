@@ -33,7 +33,10 @@ dob.on("ready", async _ => {
   console.log(await dob.readValue(1));
   console.log(await dob.getProgrammingMode());
   console.log(await dob.setProgrammingMode(1));
+  console.log(await dob.getProgrammingMode());
   console.log(await dob.setProgrammingMode(0));
+  console.log(await dob.getVersion());
+  console.log(await dob.reset());
 });
 
 dob.init();
