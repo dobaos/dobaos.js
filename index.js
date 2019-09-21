@@ -120,6 +120,9 @@ const Dobaos = params => {
   self.setProgrammingMode = payload => {
     return self._commonReq(_params.req_channel, "set programming mode", payload);
   };
+  self.getServerItems = _ => {
+    return self._commonReq(_params.req_channel, "get server items", null);
+  };
   // service reqs
   self.getVersion = _ => {
     return self._commonReq(_params.service_channel, "version", null);

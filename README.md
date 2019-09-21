@@ -38,6 +38,7 @@ dob.on("ready", async _ => {
   console.log(await dob.reset());
   console.log(await dob.getVersion());
   // baos reqs
+  console.log(await dob.getServerItems());
   console.log(await dob.getDescription([1, 2, 3]));
   console.log(await dob.getValue([1, 2, 3]));
   console.log(await dob.setValue([{ id: 10, value: 1 }, { id: 11, value: 0 }]));
@@ -56,13 +57,14 @@ dob.init();
 ## Methods
 
 ```text
+* getServerItems();
 * getDescription(null/number/[number, number...]);
 * getValue(null/number/[number, number...]);
 * readValue(null/number/[number, number...]);
 * setValue({id: number, value: <depends on dpt> }/[{id:..}, {id: ..}...]);
 * getProgrammingMode();
 * setProgrammingMode(0/1/false/true);
-* getVersion(null);
-* reset(null);
+* getVersion();
+* reset();
 ```
 

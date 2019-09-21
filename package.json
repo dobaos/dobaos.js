@@ -1,6 +1,6 @@
 {
   "name": "dobaos.js",
-  "version": "0.4.2",
+  "version": "0.4.21",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "keywords": ["knx", "baos", "dobaos"],
   "author": "Vladimir Shabunin",
-  "license": "ISC",
+  "license": "Beerware",
   "dependencies": {
     "redis": "^2.8.0"
   }
