@@ -114,6 +114,9 @@ const Dobaos = params => {
   self.setValue = payload => {
     return self._commonReq(_params.req_channel, "set value", payload);
   };
+  self.putValue = payload => {
+    return self._commonReq(_params.req_channel, "put value", payload);
+  };
   self.getProgrammingMode = _ => {
     return self._commonReq(_params.req_channel, "get programming mode", null);
   };
