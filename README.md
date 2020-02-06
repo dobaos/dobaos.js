@@ -41,8 +41,14 @@ dob.on("ready", async _ => {
   console.log(await dob.getServerItems());
   console.log(await dob.getDescription([1, 2, 3]));
   console.log(await dob.getValue([1, 2, 3]));
+
+  // set value and send to bus
+  console.log(await dob.setValue({ id: 3, value: true }));
   console.log(await dob.setValue([{ id: 10, value: 1 }, { id: 11, value: 0 }]));
   console.log(await dob.setValue([{ id: 10, value: 0 }, { id: 11, value: 0 }]));
+  // set value without sending to bus:
+  console.log(await dob.putValue([{ id: 10, value: 0 }, { id: 11, value: 0 }]));
+
   console.log(await dob.readValue([1, 2, 5, 6, 7, 8, 9]));
   console.log(await dob.readValue(1));
   console.log(await dob.getProgrammingMode());
