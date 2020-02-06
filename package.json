@@ -1,16 +1,20 @@
 {
   "name": "dobaos.js",
-  "version": "0.4.21",
+  "version": "0.4.22",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/dobaos/dobaos.js.git"
+    "type": "git",
+    "url": "https://github.com/dobaos/dobaos.js.git"
   },
-  "keywords": ["knx", "baos", "dobaos"],
+  "keywords": [
+    "knx",
+    "baos",
+    "dobaos"
+  ],
   "author": "Vladimir Shabunin",
   "license": "Beerware",
   "dependencies": {
