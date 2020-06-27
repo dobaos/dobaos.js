@@ -8,7 +8,6 @@ const Dobaos = params => {
     redis: null,
     req_channel: "dobaos_req",
     bcast_channel: "dobaos_cast",
-    service_channel: "dobaos_service",
     res_prefix: "dobaos_res",
     req_timeout: 5000
   };
@@ -108,6 +107,9 @@ const Dobaos = params => {
   self.getValue = payload => {
     return self._commonReq(_params.req_channel, "get value", payload);
   };
+  self.getStored = payload => {
+    return self._commonReq(_params.req_channel, "get stored", payload);
+  };
   self.readValue = payload => {
     return self._commonReq(_params.req_channel, "read value", payload);
   };
@@ -128,10 +130,10 @@ const Dobaos = params => {
   };
   // service reqs
   self.getVersion = _ => {
-    return self._commonReq(_params.service_channel, "version", null);
+    return self._commonReq(_params.req_channel, "version", null);
   };
   self.reset = _ => {
-    return self._commonReq(_params.service_channel, "reset", null);
+    return self._commonReq(_params.req_channel, "reset", null);
   };
 
   return self;
