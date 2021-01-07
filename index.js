@@ -6,8 +6,7 @@ const redis = require("redis");
 const Dobaos = params => {
   let _params = {
     redis: null,
-    req_channel: "dobaos_req",
-    bcast_channel: "dobaos_cast",
+    prefix: "dobaos",
     res_prefix: "dobaos_res",
     req_timeout: 5000
   };
@@ -21,6 +20,24 @@ const Dobaos = params => {
     self.sub = redis.createClient(_params.redis);
     self.bcast = redis.createClient(_params.redis);
 
+    self.pub.get(`${_params.prefix}:config:req_channel`, (err, reply) => {
+      if (err)
+        throw err;
+      if (!reply)
+        throw new Error("wrong prefix");
+
+      _params.req_channel = reply;
+    });
+    self.pub.get(`${_params.prefix}:config:bcast_channel`, (err, reply) => {
+      if (err)
+        throw err;
+      _params.bcast_channel = reply;
+      if (!reply)
+        throw new Error("wrong prefix");
+
+      self.bcast.subscribe(_params.bcast_channel);
+    });
+
     // subscribe to broadcast events
     self.bcast.on("message", (channel, message) => {
       if (channel === _params.bcast_channel) {
@@ -32,7 +49,6 @@ const Dobaos = params => {
         }
       }
     });
-    self.bcast.subscribe(_params.bcast_channel);
 
     // work with subscriber object
     self.sub.on("psubscribe", _ => {
@@ -134,6 +150,18 @@ const Dobaos = params => {
   };
   self.reset = _ => {
     return self._commonReq(_params.req_channel, "reset", null);
+  };
+  self.setName = (id, name) => {
+    return  self.pub.hset(`${_params.prefix}:config:names`, `${name}`, `${id}`);
+  };
+  self.delName = (name) => {
+    return  self.pub.hdel(`${_params.prefix}:config:names`, `${name}`);
+
+  }
+  self.getName = async (id) => {
+    let d = await self.getDescription(id);
+    if (Array.isArray(d)) d = d[0];
+    return d.name;
   };
 
   return self;
